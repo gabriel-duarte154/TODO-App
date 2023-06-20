@@ -1,0 +1,11 @@
+colors:
+--light
+
+#fafafa
+#eeeee
+#333
+#489ff0
+#ffffff
+
+font:
+system ui
