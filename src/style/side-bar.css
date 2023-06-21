@@ -1,16 +1,22 @@
 .side-bar-container {
-  left: 0;
   position: fixed;
-  height: calc(100vh - 45px);
+  left: 0;
+  height: calc(100vh - var(--top-bar-height));
   width: 300px;
-  background-color: #f6f6f6;
+  background-color: var(--side-bar-color);
   z-index: 1;
   padding-top: 2rem;
+  overflow-y: scroll;
 }
+
+.side-bar-shadow {
+  height: calc(100vh - var(--top-bar-height));
+  width: 300px;
+} 
 
 .side-bar {
   padding: 0 1rem;
-  color: #554f4f;
+  color: var(--text-color);
 }
 
 span {
@@ -28,7 +34,7 @@ span {
 }
 
 .option:hover {
-  background-color: #e8e8e8;
+  background-color: var(--hover-dark-color);
 }
 
 .icon {
@@ -37,12 +43,13 @@ span {
   justify-content: center;
   font-size: 25px;
   cursor: pointer;
+  border-radius: .5rem;
 }
 
 .icon svg {
   height: 25px;
   width: 25px;
-  fill: #4d4d4d;
+  fill: var(--text-color);
   stroke-width: 10;
 }
 
@@ -54,10 +61,9 @@ span {
   margin-bottom: 2rem;
 }
 
-.side-bar-shadow {
-  height: calc(100vh - 45px);
-  width: 300px;
-} 
+.projects-container {
+  margin-bottom: 1rem;
+}
 
 .projects-header {
   display: flex;

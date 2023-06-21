@@ -1,0 +1,71 @@
+main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 3rem;
+  max-width: 1000px;
+  margin-inline: auto;
+  user-select: none;
+}
+
+.header {
+ display: flex;
+ justify-content: space-between;
+ margin-bottom: 1rem;
+}
+
+.project-name {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.tasks {
+  margin-bottom: .5rem;
+}
+
+.task {
+  display: flex;
+  align-items: center;
+  margin: .5rem 0;
+  gap: .5rem;
+  color: #554f4f;
+  border-bottom: 1px solid #554f4f27;
+  padding: .5rem 0;
+  cursor: pointer;
+}
+
+main .icon:hover {
+  background-color: var(--hover-dark-color);
+}
+
+.task .circle {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1px solid var(--text-color);
+}
+
+.task .circle:hover {
+  background-color: var(--hover-dark-color);
+  cursor: pointer;
+}
+
+.btn-add {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  box-shadow: none;
+  border: none;
+  cursor: pointer;
+  gap: .2rem;
+  color: var(--text-color);
+}
+
+.btn-add .icon svg {
+  fill: var(--primary-color);
+}
+
+.btn-add:hover {
+  color: var(--primary-color);
+}
