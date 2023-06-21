@@ -1,79 +1,88 @@
 .side-bar-container {
-  position: fixed;
-  left: 0;
-  height: calc(100vh - var(--top-bar-height));
-  width: 300px;
-  background-color: var(--side-bar-color);
-  z-index: 1;
-  padding-top: 2rem;
-  overflow-y: scroll;
+	position: fixed;
+	height: calc(100vh - var(--top-bar-height));
+	width: var(--side-bar-width);
+	background-color: var(--side-bar-color);
+	z-index: 1;
+	padding-top: 2rem;
+	overflow-y: scroll;
+	transition: transform var(--transition-time) ease-in-out;
 }
 
 .side-bar-shadow {
-  height: calc(100vh - var(--top-bar-height));
-  width: 300px;
-} 
+	height: calc(100vh - var(--top-bar-height));
+	width: var(--side-bar-width);
+	transition: width var(--transition-time) ease-in-out;
+}
 
 .side-bar {
-  padding: 0 1rem;
-  color: var(--text-color);
+	padding: 0 1rem;
+	color: var(--text-color);
 }
 
 span {
-  display: flex;
-  align-items: center;
+	display: flex;
+	align-items: center;
 }
 
 .option {
-  display: flex;
-  align-items: center;
-  gap: .3rem;
-  padding: .5rem;
-  border-radius: .5rem;
-  cursor: pointer;
+	display: flex;
+	align-items: center;
+	gap: 0.3rem;
+	padding: 0.5rem;
+	border-radius: 0.5rem;
+	cursor: pointer;
 }
 
 .option:hover {
-  background-color: var(--hover-dark-color);
+	background-color: var(--hover-dark-color);
 }
 
 .icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 25px;
-  cursor: pointer;
-  border-radius: .5rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 25px;
+	cursor: pointer;
+	border-radius: 0.5rem;
 }
 
 .icon svg {
-  height: 25px;
-  width: 25px;
-  fill: var(--text-color);
-  stroke-width: 10;
+	height: 25px;
+	width: 25px;
+	fill: var(--text-color);
+	stroke: var(--text-color);
 }
 
 .name {
-  flex: 1;
+	flex: 1;
 }
 
 .standard-options {
-  margin-bottom: 2rem;
+	margin-bottom: 2rem;
 }
 
 .projects-container {
-  margin-bottom: 1rem;
+	margin-bottom: 1rem;
 }
 
 .projects-header {
-  display: flex;
-  font-size: 1rem;
-  align-items: center;
-  padding: .5rem;
-  border-radius: .5rem;
-  justify-content: space-between;
+	display: flex;
+	font-size: 1rem;
+	align-items: center;
+	padding: 0.5rem;
+	border-radius: 0.5rem;
+	justify-content: space-between;
 }
 
 .projects {
-  padding-inline: .5rem 0;
+	padding-inline: 0.5rem 0;
+}
+
+.open {
+	left: 0;
+}
+
+.close {
+	transform: translateX(calc(-1 * var(--side-bar-width)));
 }

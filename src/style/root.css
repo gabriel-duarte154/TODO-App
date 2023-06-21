@@ -7,4 +7,15 @@
   --hover-dark-color: #e8e8e8;
   --hover-light-color: #ffffff38;
   --top-bar-height: 45px;
+  --side-bar-width: 300px;
+  --transition-time: .3s;
+}
+
+:root.dark {
+  --primary-color: #164169;
+  --side-bar-color: #172c41;
+  --text-color: #fff;
+  --hover-dark-color: #164169;
+  --bg-color: #233e59;
+  --secondary-color: #5082b1;
 }

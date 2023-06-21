@@ -1,10 +1,11 @@
 import { svgs } from '../svgs/svgs.js';
-import '../style/side-bar.css'
+import '../style/side-bar.css';
 
 function generateSideBar() {
 	const sideBarShadow = createSideShadow();
 	const sideBarContainer = document.createElement('div');
 	sideBarContainer.classList.add('side-bar-container');
+	sideBarContainer.classList.add('open');
 
 	const sideBar = createSideBar();
 	sideBarContainer.appendChild(sideBar);

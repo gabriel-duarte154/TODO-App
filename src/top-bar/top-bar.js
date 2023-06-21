@@ -20,6 +20,7 @@ function createburgerMenu() {
 	const menu = document.createElement('div');
 	menu.classList.add('burger-menu');
 	menu.classList.add('btn');
+	menu.id = 'burgerMenu';
 	menu.innerHTML = svgs.menu;
 
 	return menu;
@@ -40,13 +41,14 @@ function createQuickSearch() {
 
 function createToggle() {
  const toggle =  document.createElement('div');
-	toggle.classList.add('togle-theme');
+	toggle.classList.add('toggle-theme');
 	toggle.classList.add('btn');
 	toggle.innerHTML = svgs.sun;
   toggle.innerHTML += svgs.moon;
   
 	const circle = document.createElement('div');
-  circle.classList.add('circle');
+	circle.classList.add('circle');
+	circle.id = 'toggle-circle';
   
   toggle.appendChild(circle);
   
