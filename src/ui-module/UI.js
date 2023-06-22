@@ -2,6 +2,7 @@ import { generateTopBar } from './top-bar/top-bar.js';
 import { generateSideBar } from './side-bar/side-bar.js';
 import { generateProjectModal } from './modals/project-modal.js';
 import { ProjectsModule } from '../Projects/projects.js';
+import { svgs } from './svgs/svgs.js';
 
 const UI = (function () {
 	const page = document.querySelector('.page-container');
@@ -14,6 +15,7 @@ const UI = (function () {
 		page.appendChild(sideBar[1]);
 		page.appendChild(sideBar[0]);
 		addEvents();
+		addAllProjects();
 	}
 
 	function addEvents() {
@@ -102,6 +104,7 @@ const UI = (function () {
 
 	function openProjectModal() {
 		page.appendChild(projectModal);
+		projectModal.querySelector('input').focus();
 	}
 
 	function closeProjectModal() {
@@ -111,9 +114,56 @@ const UI = (function () {
 
 	function addProject() {
 		let name = projectModal.querySelector('input').value;
+
 		if (!name) return;
-    ProjectsModule.addProject(name);
-    closeProjectModal();
+		if (ProjectsModule.findProject(name)) {
+			alert('Project name already exist.');
+			return;
+		}
+
+		ProjectsModule.addProject(name);
+		appendProject(ProjectsModule.getProject(name));
+		closeProjectModal();
+	}
+
+	function appendProject(project) {
+		const projectsContainer = sideBar[0].querySelector('.projects');
+		projectsContainer.appendChild(createProject(project));
+	}
+
+	function createProject(project) {
+		const container = document.createElement('div');
+		container.classList.add('option');
+		container.dataset.name = project.name;
+
+		const projectName = document.createElement('span');
+		projectName.classList.add('name');
+		projectName.textContent = project.name;
+
+		const remove = document.createElement('span');
+		remove.classList.add('icon');
+		remove.innerHTML = svgs.close;
+		remove.addEventListener('click', removeProject);
+
+		container.appendChild(projectName);
+		container.appendChild(remove);
+
+		return container;
+	}
+
+	function removeProject(e) {
+		const name = e.target.parentElement.parentElement.dataset.name;
+		const projects = sideBar[0].querySelector('.projects');
+		projects.removeChild(e.target.parentElement.parentElement);
+		ProjectsModule.removeProject(name);
+	}
+
+	function addAllProjects() {
+		const projects = ProjectsModule.getAllProjects();
+		const projectsContainer = sideBar[0].querySelector('.projects');
+		projects.forEach((project) => {
+			projectsContainer.appendChild(createProject(project));
+		});
 	}
 
 	return {

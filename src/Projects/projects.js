@@ -3,21 +3,36 @@ const ProjectsModule = (function ProjectsModule() {
 
 	function addProject(name) {
 		Projects.push(Project(name));
-		console.log(Projects);
 	}
 
 	function getAllProjects() {
 		return Projects;
 	}
 
-	function getProject(i) {
-		return Projects[i];
+	function getProject(name) {
+		let index = findIndex(name);
+		return Projects[index];
+	}
+
+	function findIndex(name) {
+		return Projects.findIndex((project) => project.name === name);
+	}
+
+	function findProject(name) {
+		return Projects.find((project) => project.name === name);
+	}
+
+	function removeProject(name) {
+		const projectIndex = findIndex(name);
+		Projects.splice(projectIndex, 1);
 	}
 
 	return {
 		addProject,
 		getAllProjects,
 		getProject,
+		findProject,
+		removeProject,
 	};
 })();
 
