@@ -21,10 +21,10 @@ function isTheme(theme) {
 function moveToggle() {
 	const circle = document.querySelector('#toggle-circle');
 	if (isTheme('dark')) {
-		circle.style.transform = 'translateX(-28.2px)';
-  } else {
-    circle.style.transform = 'translateX(0)';
-  }
+		circle.style.transform = 'translateX(-26.5px)';
+	} else {
+		circle.style.transform = 'translateX(0)';
+	}
 }
 
 export { addToggleThemeEvent };
