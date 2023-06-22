@@ -1,13 +1,13 @@
 import { svgs } from '../svgs/svgs.js';
-import '../style/top-bar.css'
+import '../../style/top-bar.css';
 
 function generateTopBar() {
 	const topBarContainer = document.createElement('div');
 	topBarContainer.classList.add('top-bar-container');
 
 	const burgerMenu = createburgerMenu();
-  const quickSearch = createQuickSearch();
-  const toogleTheme = createToggle();
+	const quickSearch = createQuickSearch();
+	const toogleTheme = createToggle();
 
 	topBarContainer.appendChild(burgerMenu);
 	topBarContainer.appendChild(quickSearch);
@@ -40,19 +40,19 @@ function createQuickSearch() {
 }
 
 function createToggle() {
- const toggle =  document.createElement('div');
+	const toggle = document.createElement('div');
 	toggle.classList.add('toggle-theme');
 	toggle.classList.add('btn');
 	toggle.innerHTML = svgs.sun;
-  toggle.innerHTML += svgs.moon;
-  
+	toggle.innerHTML += svgs.moon;
+
 	const circle = document.createElement('div');
 	circle.classList.add('circle');
 	circle.id = 'toggle-circle';
-  
-  toggle.appendChild(circle);
-  
-  return toggle;
+
+	toggle.appendChild(circle);
+
+	return toggle;
 }
 
 export { generateTopBar };

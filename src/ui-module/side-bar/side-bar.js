@@ -1,5 +1,5 @@
 import { svgs } from '../svgs/svgs.js';
-import '../style/side-bar.css';
+import '../../style/side-bar.css';
 
 function generateSideBar() {
 	const sideBarShadow = createSideShadow();
@@ -41,14 +41,17 @@ function createOptionsContainer() {
 		{
 			name: 'Inbox',
 			icon: 'inbox',
+			id: 'inbox',
 		},
 		{
 			name: 'Today',
 			icon: 'today',
+			id: 'today',
 		},
 		{
 			name: 'This week',
 			icon: 'calendar',
+			id: 'week',
 		},
 	];
 
@@ -63,6 +66,7 @@ function createOptionsContainer() {
 function createOption(option) {
 	const container = document.createElement('div');
 	container.classList.add('option');
+	container.id = option.id;
 
 	const spanIcon = document.createElement('span');
 	spanIcon.classList.add('icon');
@@ -98,6 +102,7 @@ function createProjectsHeader() {
 
 	const span = document.createElement('span');
 	span.classList.add('icon');
+	span.id = 'project-modal'
 	span.innerHTML = svgs.plus;
 
 	header.appendChild(span);
