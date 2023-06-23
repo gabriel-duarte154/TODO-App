@@ -94,3 +94,9 @@ span {
 .close {
 	transform: translateX(calc(-1 * var(--side-bar-width)));
 }
+
+@media screen and (max-width: 800px) {
+	.side-bar-shadow {
+		width: 0;
+	}
+}

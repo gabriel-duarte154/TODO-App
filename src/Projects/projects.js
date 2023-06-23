@@ -1,4 +1,6 @@
-const ProjectsModule = (function ProjectsModule() {
+import { getDate } from '../date/date.js';
+
+const ProjectsModule = (function () {
 	const Projects = [];
 
 	function addProject(name) {
@@ -27,12 +29,23 @@ const ProjectsModule = (function ProjectsModule() {
 		Projects.splice(projectIndex, 1);
 	}
 
+	function getAllTasks() {
+		const projects = getAllProjects();
+		const tasks = [];
+		projects.forEach((project) => {
+			tasks.push(...project.getTasks());
+		});
+
+		return tasks;
+	}
+
 	return {
 		addProject,
 		getAllProjects,
 		getProject,
 		findProject,
 		removeProject,
+		getAllTasks,
 	};
 })();
 
@@ -64,17 +77,11 @@ function Task(title, description, dueDate, priority) {
 	};
 }
 
-function getDate() {
-	const fullDate = new Date();
-	const day = fullDate.getDate();
-	const month = fullDate.getMonth();
-	const year = fullDate.getFullYear();
-
-	return {
-		day: day,
-		month: month + 1,
-		year: year,
-	};
-}
+ProjectsModule.addProject('Make');
+const make = ProjectsModule.getProject('Make');
+make.addTask('test1', 'dasd', '24-05-2024', 'p1');
+make.addTask('test2', 'dasd', '24-05-2024', 'p1');
+make.addTask('test3', 'dasd', '24-05-2024', 'p1');
+make.addTask('test4', 'dasd', '24-05-2024', 'p1');
 
 export { ProjectsModule };

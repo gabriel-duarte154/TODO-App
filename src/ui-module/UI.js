@@ -3,6 +3,7 @@ import { generateSideBar } from './side-bar/side-bar.js';
 import { generateProjectModal } from './modals/project-modal.js';
 import { ProjectsModule } from '../Projects/projects.js';
 import { svgs } from './svgs/svgs.js';
+import { getDate } from '../date/date.js';
 
 const UI = (function () {
 	const page = document.querySelector('.page-container');
@@ -16,6 +17,8 @@ const UI = (function () {
 		page.appendChild(sideBar[0]);
 		addEvents();
 		addAllProjects();
+		addDefalutProjectsEvents();
+		openInbox();
 	}
 
 	function addEvents() {
@@ -148,7 +151,19 @@ const UI = (function () {
 		container.appendChild(projectName);
 		container.appendChild(remove);
 
+		container.addEventListener('click', (e) => {
+			if (e.target === container || e.target === projectName) {
+				openProjectPage(container);
+			}
+		});
+
 		return container;
+	}
+
+	function openProjectPage(project) {
+		const main = createMainPage(project.dataset.name);
+		removeActualPage();
+		page.appendChild(main);
 	}
 
 	function removeProject(e) {
@@ -164,6 +179,126 @@ const UI = (function () {
 		projects.forEach((project) => {
 			projectsContainer.appendChild(createProject(project));
 		});
+	}
+
+	function addDefalutProjectsEvents() {
+		const inbox = sideBar[0].querySelector('#inbox');
+		const todayProjects = sideBar[0].querySelector('#today');
+		const weekProjects = sideBar[0].querySelector('#week');
+
+		inbox.addEventListener('click', openInbox);
+		todayProjects.addEventListener('click', openTodayPage);
+		weekProjects.addEventListener('click', openWeekPage);
+	}
+
+	function openInbox() {
+		const main = createMainPage('Inbox');
+		removeActualPage();
+		appendTasks(getAllTasks, main);
+		page.appendChild(main);
+	}
+
+	function openTodayPage() {
+		const main = createMainPage('Today');
+		removeActualPage();
+		appendTasks(getTodayTasks, main);
+		page.appendChild(main);
+	}
+
+	function openWeekPage() {
+		const main = createMainPage('This week');
+		removeActualPage();
+		appendTasks(getWeekTasks, main);
+		page.appendChild(main);
+	}
+
+	function appendTasks(fun, element) {
+		const tasksContainer = element.querySelector('.tasks');
+		const tasks = fun();
+		tasks.forEach((task) => {
+			const container = createTask(task.title);
+			tasksContainer.appendChild(container);
+		});
+	}
+
+	function removeActualPage() {
+		const main = page.querySelector('main');
+		if (!main) return;
+		page.removeChild(main);
+	}
+
+	function createMainPage(title) {
+		const main = document.createElement('main');
+
+		const header = document.createElement('div');
+		header.classList.add('header');
+
+		const headerTitle = document.createElement('div');
+		headerTitle.classList.add('project-name');
+		headerTitle.textContent = title;
+
+		const mainContent = document.createElement('div');
+		mainContent.classList.add('main-content');
+
+		const tasksContainer = document.createElement('div');
+		tasksContainer.classList.add('tasks');
+
+		mainContent.appendChild(tasksContainer);
+		header.appendChild(headerTitle);
+		main.appendChild(header);
+		main.appendChild(mainContent);
+
+		return main;
+	}
+
+	function getAllTasks() {
+		const tasks = ProjectsModule.getAllTasks();
+		return tasks;
+	}
+
+	function getTodayTasks() {
+		const tasks = getAllTasks();
+		const todayTasks = tasks.filter(({ addDate }) => {
+			const actualDate = getDate();
+			return (
+				actualDate.year === addDate.year &&
+				actualDate.month === addDate.month &&
+				actualDate.day === addDate.day
+			);
+		});
+
+		return todayTasks;
+	}
+
+	function getWeekTasks() {
+		const tasks = getAllTasks();
+		const weekTasks = tasks.filter(({ addDate }) => {
+			const actualDate = getDate();
+			return (
+				actualDate.year === addDate.year &&
+				actualDate.month === addDate.month &&
+				actualDate.day <= addDate.day + 7
+			);
+		});
+
+		return weekTasks;
+	}
+
+	function createTask(title) {
+		const task = document.createElement('div');
+		task.classList.add('task');
+
+		const circle = document.createElement('span');
+		circle.classList.add('circle');
+
+		const taskName = document.createElement('span');
+		taskName.classList.add('name');
+		taskName.textContent = title;
+
+		task.appendChild(circle);
+		task.appendChild(taskName);
+
+		return task;
 	}
 
 	return {

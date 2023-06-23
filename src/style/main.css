@@ -6,6 +6,7 @@ main {
   max-width: 1000px;
   margin-inline: auto;
   user-select: none;
+  color: var(--text-color);
 }
 
 .header {
@@ -15,7 +16,7 @@ main {
 }
 
 .project-name {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   font-weight: bold;
 }
 
@@ -28,9 +29,10 @@ main {
   align-items: center;
   margin: .5rem 0;
   gap: .5rem;
-  color: #554f4f;
-  border-bottom: 1px solid #554f4f27;
-  padding: .5rem 0;
+  color: var(--text-color);
+  border: 1px solid var(--text-color);
+  padding: .5rem .3rem;
+  border-radius: .2rem;
   cursor: pointer;
 }
 
