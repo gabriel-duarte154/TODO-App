@@ -39,7 +39,8 @@
   flex-direction: column;
 }
 
-.input-container input {
+.input-container input,
+.input-container select{
   background-color: transparent;
   border-radius: .2rem;
   border: 1px solid var(--text-color);

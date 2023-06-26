@@ -56,6 +56,10 @@ function Project(name) {
 		tasks.push(Task(title, description, dueDate, priority));
 	}
 
+	function findTask(title) {
+		return tasks.find((task) => task.title === title);
+	}
+
 	function getTasks() {
 		return tasks;
 	}
@@ -64,6 +68,7 @@ function Project(name) {
 		name: name,
 		addTask,
 		getTasks,
+		findTask,
 	};
 }
 
@@ -90,6 +95,5 @@ newProject.addTask('test5', 'dasd', '24-05-2024', 'p2');
 newProject.addTask('test6', 'dasd', '24-05-2024', 'p1');
 newProject.addTask('test7', 'dasd', '24-05-2024', 'p3');
 newProject.addTask('test8', 'dasd', '24-05-2024', 'p1');
-
 
 export { ProjectsModule };

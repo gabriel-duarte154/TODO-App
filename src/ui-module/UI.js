@@ -4,7 +4,7 @@ import { generateProjectModal } from './modals/project-modal.js';
 import { ProjectsModule } from '../Projects/projects.js';
 import { svgs } from './svgs/svgs.js';
 import { getDate } from '../date/date.js';
-import { generateModal } from './modals/modal.js';
+import { generateTaskModal } from './modals/task-modal.js';
 
 const UI = (function () {
 	const page = document.querySelector('.page-container');
@@ -359,7 +359,7 @@ const UI = (function () {
 			btn.appendChild(span);
 
 			btn.addEventListener('click', () => {
-				addTask(newPage.page);
+				openTaskModal(newPage);
 			});
 			newPage.page.appendChild(btn);
 
@@ -381,61 +381,70 @@ const UI = (function () {
 			return tasks;
 		}
 
-		function addTask(PageName) {
-			openTaskModal();
-		}
-
-		function openTaskModal() {
-			const modal = generateModal();
-			const header = modal.querySelector('.modal-header');
-			header.textContent = 'Add Task';
-			const inputs = [
-				{
-					type: 'text',
-					id: 'title',
-					title: 'Title',
-				},
-				{
-					type: 'text',
-					id: 'description',
-					title: 'Description',
-				},
-				{
-					type: 'date',
-					id: 'dueDate',
-					title: 'dueDate',
-				},
-				{
-					type: 'select',
-					id: 'priority',
-					title: 'priority',
-				},
-			];
-
-			createInputs(inputs, modal);
-
+		function openTaskModal(pageData) {
+			const modal = generateTaskModal();
+			addEventsTaskModal(modal, pageData);
 			page.appendChild(modal);
 		}
 
-		function createInputs(inputs, modal) {
-			const inputContainer = modal.querySelector('.input-container');
+		function addEventsTaskModal(modal, pageData) {
+			const addBtn = modal.querySelector('#addTask');
+			const cancelBtn = modal.querySelector('#closeModal');
+			const inputs = modal.querySelector('.input-container');
 
-			inputs.forEach((element) => {
-				const field = document.createElement('div');
-				field.classList.add('field');
+			addBtn.addEventListener('click', () => {
+				addTask(inputs, pageData);
+			});
+			cancelBtn.addEventListener('click', () => {
+				closeModal(modal);
+			});
+		}
 
-				const input = document.createElement('input');
-				input.type = element.type;
-				input.id = element.id;
+		function addTask(inputs, pageData) {
+			const title = inputs.querySelector('#title');
+			const description = inputs.querySelector('#description');
+			const date = inputs.querySelector('#dueDate');
+			const priority = inputs.querySelector('#priority');
+			const project = ProjectsModule.getProject(pageData.name);
 
-				const label = document.createElement('label');
-				label.textContent = element.title;
-				label.htmlFor = element.id;
+			if (!title.value) {
+				alert('The task must have at least a title');
+				return;
+			}
 
-				field.appendChild(label);
-				field.appendChild(input);
+			if (project.findTask(title.value)) {
+				alert('The task title already exist');
+				return;
+			}
 
-				inputContainer.appendChild(field);
+			project.addTask(
+				title.value,
+				description.value,
+				date.value,
+				priority.value
+			);
+
+			clearInputs([title, description, date]);
+			priority.value = 'p1';
+			updatePage(pageData);
+		}
+
+		function clearInputs(inputs) {
+			inputs.forEach((input) => (input.value = ''));
+		}
+
+		function closeModal(modal) {
+			page.removeChild(modal);
+		}
+
+		function updatePage(pageData) {
+			const taskContainer = pageData.page.querySelector('.tasks');
+			const tasks = ProjectsModule.getProject(pageData.name).getTasks();
+
+			taskContainer.innerHTML = '';
+
+			tasks.forEach((task) => {
+				taskContainer.appendChild(createTask(task));
 			});
 		}
 
