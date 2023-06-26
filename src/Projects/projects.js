@@ -84,4 +84,12 @@ make.addTask('test2', 'dasd', '24-05-2024', 'p1');
 make.addTask('test3', 'dasd', '24-05-2024', 'p1');
 make.addTask('test4', 'dasd', '24-05-2024', 'p1');
 
+ProjectsModule.addProject('new');
+const newProject = ProjectsModule.getProject('new');
+newProject.addTask('test5', 'dasd', '24-05-2024', 'p2');
+newProject.addTask('test6', 'dasd', '24-05-2024', 'p1');
+newProject.addTask('test7', 'dasd', '24-05-2024', 'p3');
+newProject.addTask('test8', 'dasd', '24-05-2024', 'p1');
+
+
 export { ProjectsModule };

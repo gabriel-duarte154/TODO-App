@@ -95,6 +95,10 @@ span {
 	transform: translateX(calc(-1 * var(--side-bar-width)));
 }
 
+.active {
+	background-color: var(--hover-dark-color);
+}
+
 @media screen and (max-width: 800px) {
 	.side-bar-shadow {
 		width: 0;
