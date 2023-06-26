@@ -252,10 +252,32 @@ const UI = (function () {
 			taskName.classList.add('name');
 			taskName.textContent = task.title;
 
+			const removeIcon = document.createElement('span');
+			removeIcon.innerHTML = svgs.close;
+			removeIcon.classList.add('icon');
+
+			removeIcon.addEventListener('click', () => {
+				removeTask(task);
+			});
+
 			taskContainer.appendChild(circle);
 			taskContainer.appendChild(taskName);
+			taskContainer.appendChild(removeIcon);
 
 			return taskContainer;
+		}
+
+		function removeTask(task) {
+			const project = ProjectsModule.getProject(task.project);
+			const tasks = project.getTasks();
+			const taskIndex = project.findTaskIndex(task.title);
+
+			tasks.splice(taskIndex, 1);
+
+			const pageData = Pages.find((page) => page.name === task.project);
+
+			updateDefaultPages();
+			updatePage(pageData);
 		}
 
 		function active() {
@@ -327,7 +349,7 @@ const UI = (function () {
 				if (object.name === 'Today') {
 					appendTasks(getTodayTasks, object.page);
 				}
-				if (object.name === 'This Week') {
+				if (object.name === 'Week') {
 					appendTasks(getWeekTasks, object.page);
 				}
 			});

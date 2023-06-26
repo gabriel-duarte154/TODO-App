@@ -21,7 +21,9 @@ const ProjectsModule = (function () {
 	}
 
 	function findProject(name) {
-		return Projects.find((project) => project.name === name);
+		return Projects.find(
+			(project) => project.name.toLowerCase() === name.toLowerCase()
+		);
 	}
 
 	function removeProject(name) {
@@ -53,11 +55,15 @@ function Project(name) {
 	const tasks = [];
 
 	function addTask(title, description, dueDate, priority) {
-		tasks.push(Task(title, description, dueDate, priority));
+		tasks.push(Task(title, description, dueDate, priority, name));
 	}
 
 	function findTask(title) {
 		return tasks.find((task) => task.title === title);
+	}
+
+	function findTaskIndex(title) {
+		return tasks.findIndex((task) => task.title === title);
 	}
 
 	function getTasks() {
@@ -69,31 +75,30 @@ function Project(name) {
 		addTask,
 		getTasks,
 		findTask,
+		findTaskIndex,
 	};
 }
 
-function Task(title, description, dueDate, priority) {
+function Task(title, description, dueDate, priority, project) {
 	return {
 		title: title,
 		description: description,
 		dueDate: dueDate,
 		priority: priority,
 		addDate: getDate(),
+		project,
 	};
 }
 
-ProjectsModule.addProject('Make');
-const make = ProjectsModule.getProject('Make');
-make.addTask('test1', 'dasd', '24-05-2024', 'p1');
-make.addTask('test2', 'dasd', '24-05-2024', 'p1');
-make.addTask('test3', 'dasd', '24-05-2024', 'p1');
-make.addTask('test4', 'dasd', '24-05-2024', 'p1');
-
-ProjectsModule.addProject('new');
-const newProject = ProjectsModule.getProject('new');
-newProject.addTask('test5', 'dasd', '24-05-2024', 'p2');
-newProject.addTask('test6', 'dasd', '24-05-2024', 'p1');
-newProject.addTask('test7', 'dasd', '24-05-2024', 'p3');
-newProject.addTask('test8', 'dasd', '24-05-2024', 'p1');
+ProjectsModule.addProject('Todo App');
+const app = ProjectsModule.getProject('Todo App');
+app.addTask('edit tasks', 'for the todo app', '28-06-2023', 'p1');
+app.addTask('edit project Name', 'for the todo app', '28-06-2023', 'p1');
+app.addTask('show details', 'for the todo app', '28-06-2023', 'p1');
+app.addTask('task done', 'for the todo app', '28-06-2023', 'p1');
+app.addTask('color palete', 'for the todo app', '28-06-2023', 'p2');
+app.addTask('hover effects', 'for the todo app', '28-06-2023', 'p2');
+app.addTask('task done', 'for the todo app', '28-06-2023', 'p1');
+app.addTask('storage Module', 'for the todo app', '28-06-2023', 'p1');
 
 export { ProjectsModule };
