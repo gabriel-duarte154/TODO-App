@@ -30,7 +30,16 @@ const UI = (function () {
 	function addMenuEvent() {
 		const bugerMenu = topBar.querySelector('#burgerMenu');
 		bugerMenu.addEventListener('click', openCloseSideBar);
-		window.addEventListener('resize', openCloseShadow);
+		window.addEventListener('resize', () => {
+			openCloseShadow();
+			if (window.innerWidth <= 800) {
+				sideBar[0].classList.add('close');
+				sideBar[0].classList.remove('open');
+			} else {
+				sideBar[0].classList.add('open');
+				sideBar[0].classList.remove('close');
+			}
+		});
 	}
 
 	function openCloseSideBar() {
@@ -301,7 +310,7 @@ const UI = (function () {
 
 			if (task.isDone === true) {
 				taskContainer.classList.add('done');
-				circle.classList.add('complete')
+				circle.classList.add('complete');
 			} else {
 				taskContainer.appendChild(btnDetails);
 				taskContainer.appendChild(editIcon);

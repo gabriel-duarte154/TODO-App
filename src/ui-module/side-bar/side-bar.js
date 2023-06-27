@@ -49,7 +49,7 @@ function createOptionsContainer() {
 			id: 'today',
 		},
 		{
-			name: 'This week',
+			name: 'Week',
 			icon: 'calendar',
 			id: 'week',
 		},
