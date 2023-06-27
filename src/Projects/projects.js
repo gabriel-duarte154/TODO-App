@@ -37,8 +37,12 @@ const ProjectsModule = (function () {
 		projects.forEach((project) => {
 			tasks.push(...project.getTasks());
 		});
-
 		return tasks;
+	}
+
+	function setProjectName(project, newName) {
+		project.name = newName;
+		project.updateProjectName(newName);
 	}
 
 	return {
@@ -48,14 +52,16 @@ const ProjectsModule = (function () {
 		findProject,
 		removeProject,
 		getAllTasks,
+		setProjectName,
 	};
 })();
 
 function Project(name) {
 	const tasks = [];
+	let projectName = name;
 
 	function addTask(title, description, dueDate, priority) {
-		tasks.push(Task(title, description, dueDate, priority, name));
+		tasks.push(Task(title, description, dueDate, priority, projectName));
 	}
 
 	function findTask(title) {
@@ -70,6 +76,17 @@ function Project(name) {
 		return tasks;
 	}
 
+	function updateProjectName(newName) {
+		projectName = newName;
+		updateTaskProject();
+	}
+
+	function updateTaskProject() {
+		tasks.forEach((task) => {
+			task.project = projectName;
+		});
+	}
+
 	function updateTask(task, obj) {
 		task.title = obj.title;
 		task.description = obj.description;
@@ -78,12 +95,13 @@ function Project(name) {
 	}
 
 	return {
-		name: name,
+		name: projectName,
 		addTask,
 		getTasks,
 		findTask,
 		findTaskIndex,
-		updateTask
+		updateTask,
+		updateProjectName,
 	};
 }
 
@@ -100,8 +118,6 @@ function Task(title, description, dueDate, priority, project) {
 
 ProjectsModule.addProject('Todo App');
 const app = ProjectsModule.getProject('Todo App');
-app.addTask('edit tasks', 'for the todo app', '2023-06-27', 'p1');
-app.addTask('edit project Name', 'for the todo app', '2023-06-27', 'p1');
 app.addTask('show details', 'for the todo app', '2023-06-27', 'p1');
 app.addTask('task done', 'for the todo app', '2023-06-27', 'p1');
 app.addTask('color palete', 'for the todo app', '2023-06-27', 'p2');

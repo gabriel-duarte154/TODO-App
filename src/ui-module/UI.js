@@ -266,6 +266,7 @@ const UI = (function () {
 
 			editIcon.addEventListener('click', () => {
 				editTask(task);
+				console.log(task);
 			});
 
 			taskContainer.appendChild(circle);
@@ -345,7 +346,7 @@ const UI = (function () {
 			const project = ProjectsModule.getProject(task.project);
 			const newData = getInputsValues(modal);
 
-			if (project.findTask(newData.title)) {
+			if (project.findTask(newData.title) && newData.title !== task.title) {
 				alert('Task name already exist.');
 				return false;
 			}
@@ -371,6 +372,8 @@ const UI = (function () {
 		function appendProject(project) {
 			const projectsContainer = sideBarContainer.querySelector('.projects');
 			projectsContainer.appendChild(createProject(project));
+			const newpage = createNewPage(project);
+			Pages.push(newpage);
 		}
 
 		function createProject(project) {
@@ -398,7 +401,6 @@ const UI = (function () {
 				}
 			});
 
-			createNewPage(project);
 			return container;
 		}
 
@@ -439,6 +441,8 @@ const UI = (function () {
 			const projectsContainer = sideBarContainer.querySelector('.projects');
 			projects.forEach((project) => {
 				projectsContainer.appendChild(createProject(project));
+				const newpage = createNewPage(project);
+				Pages.push(newpage);
 			});
 		}
 
@@ -451,6 +455,8 @@ const UI = (function () {
 			icon.innerHTML = svgs.plus;
 			const span = document.createElement('span');
 			span.textContent = 'Add Task';
+
+			addPageFunction(newPage);
 
 			btn.appendChild(icon);
 			btn.appendChild(span);
@@ -469,7 +475,77 @@ const UI = (function () {
 					tasksPlace.appendChild(taskContainer);
 				});
 			}
-			Pages.push(newPage);
+			return newPage;
+		}
+
+		function addPageFunction(pageData) {
+			const header = pageData.page.querySelector('.header');
+			const editIcon = document.createElement('span');
+			editIcon.innerHTML = svgs.pen;
+			editIcon.classList.add('icon');
+			editIcon.classList.add('hidden');
+
+			header.addEventListener('mouseover', () => {
+				editIcon.classList.remove('hidden');
+			});
+			header.addEventListener('mouseout', () => {
+				editIcon.classList.add('hidden');
+			});
+
+			editIcon.addEventListener('click', () => {
+				openEditProjectModal(pageData.name);
+			});
+
+			header.appendChild(editIcon);
+		}
+
+		function openEditProjectModal(projectName) {
+			const modal = generateProjectModal();
+			const header = modal.querySelector('.modal-header');
+			const input = modal.querySelector('input');
+			const save = modal.querySelector('#add-project');
+			const cancel = modal.querySelector('#close-project-modal');
+
+			header.textContent = 'Editing Project';
+			input.value = projectName;
+			save.textContent = 'save';
+
+			save.addEventListener('click', () => {
+				updateProjectName(input.value, projectName, modal);
+			});
+			cancel.addEventListener('click', () => {
+				closeModal(modal);
+			});
+
+			page.appendChild(modal);
+			input.focus();
+		}
+
+		function updateProjectName(newName, projectName, modal) {
+			if (!isvalidProject(newName) && newName !== projectName) {
+				alert('Project name already exist or is a invalid name');
+				return;
+			}
+
+			if (!newName) return;
+
+			const project = ProjectsModule.findProject(projectName);
+			ProjectsModule.setProjectName(project, newName);
+			const pageIndex = Pages.findIndex((page) => page.name === projectName);
+			const newPage = createNewPage(project);
+			Pages.splice(pageIndex, 1, newPage);
+			updateSidebar();
+			openPage(newPage.name);
+			closeModal(modal);
+		}
+
+		function updateSidebar() {
+			const projects = ProjectsModule.getAllProjects();
+			const projectsTriggers = sideBarContainer.querySelector('.projects');
+			projectsTriggers.innerHTML = '';
+			projects.forEach((project) => {
+				projectsTriggers.appendChild(createProject(project));
+			});
 		}
 
 		function getProjectTasks(projectName) {
@@ -554,6 +630,24 @@ const UI = (function () {
 			active();
 		}
 
+		function isInvalidName(name) {
+			const isValid = Pages.find(
+				(page) => page.name.toLowerCase() === name.toLowerCase()
+			)
+				? true
+				: false;
+
+			return isValid;
+		}
+
+		function isvalidProject(name) {
+			if (isInvalidName(name)) {
+				return false;
+			}
+
+			return true;
+		}
+
 		function init() {
 			createDefalutPages();
 			addDefalutProjectsEvents();
@@ -564,14 +658,15 @@ const UI = (function () {
 		return {
 			init,
 			appendProject,
+			isvalidProject,
 		};
 	})();
 
 	function addProject() {
 		let name = projectModal.querySelector('input').value;
 		if (!name) return;
-		if (ProjectsModule.findProject(name)) {
-			alert('Project name already exist.');
+		if (!changePageModule.isvalidProject(name)) {
+			alert('Project name already exist or is a invalid name');
 			return;
 		}
 
