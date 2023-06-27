@@ -70,12 +70,20 @@ function Project(name) {
 		return tasks;
 	}
 
+	function updateTask(task, obj) {
+		task.title = obj.title;
+		task.description = obj.description;
+		task.dueDate = obj.dueDate;
+		task.priority = obj.priority;
+	}
+
 	return {
 		name: name,
 		addTask,
 		getTasks,
 		findTask,
 		findTaskIndex,
+		updateTask
 	};
 }
 
@@ -92,13 +100,12 @@ function Task(title, description, dueDate, priority, project) {
 
 ProjectsModule.addProject('Todo App');
 const app = ProjectsModule.getProject('Todo App');
-app.addTask('edit tasks', 'for the todo app', '2023-27-06', 'p1');
-app.addTask('edit project Name', 'for the todo app', '2023-27-06', 'p1');
-app.addTask('show details', 'for the todo app', '2023-27-06', 'p1');
-app.addTask('task done', 'for the todo app', '2023-27-06', 'p1');
-app.addTask('color palete', 'for the todo app', '2023-27-06', 'p2');
-app.addTask('hover effects', 'for the todo app', '2023-27-06', 'p2');
-app.addTask('task done', 'for the todo app', '2023-27-06', 'p1');
-app.addTask('storage Module', 'for the todo app', '2023-27-06', 'p1');
+app.addTask('edit tasks', 'for the todo app', '2023-06-27', 'p1');
+app.addTask('edit project Name', 'for the todo app', '2023-06-27', 'p1');
+app.addTask('show details', 'for the todo app', '2023-06-27', 'p1');
+app.addTask('task done', 'for the todo app', '2023-06-27', 'p1');
+app.addTask('color palete', 'for the todo app', '2023-06-27', 'p2');
+app.addTask('hover effects', 'for the todo app', '2023-06-27', 'p2');
+app.addTask('storage Module', 'for the todo app', '2023-06-27', 'p1');
 
 export { ProjectsModule };

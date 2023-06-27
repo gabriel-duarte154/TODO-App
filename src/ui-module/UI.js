@@ -256,12 +256,21 @@ const UI = (function () {
 			removeIcon.innerHTML = svgs.close;
 			removeIcon.classList.add('icon');
 
+			const editIcon = document.createElement('span');
+			editIcon.innerHTML = svgs.pen;
+			editIcon.classList.add('icon');
+
 			removeIcon.addEventListener('click', () => {
 				removeTask(task);
 			});
 
+			editIcon.addEventListener('click', () => {
+				editTask(task);
+			});
+
 			taskContainer.appendChild(circle);
 			taskContainer.appendChild(taskName);
+			taskContainer.appendChild(editIcon);
 			taskContainer.appendChild(removeIcon);
 
 			return taskContainer;
@@ -274,10 +283,76 @@ const UI = (function () {
 
 			tasks.splice(taskIndex, 1);
 
-			const pageData = Pages.find((page) => page.name === task.project);
+			const pageData = getPage(task);
 
 			updateDefaultPages();
 			updatePage(pageData);
+		}
+
+		function getPage(task) {
+			return Pages.find((page) => page.name === task.project);
+		}
+
+		function editTask(task) {
+			const modal = generateTaskModal();
+			const title = modal.querySelector('.modal-header');
+			const saveBtn = modal.querySelector('#addTask');
+			const cancelBtn = modal.querySelector('#closeModal');
+
+			title.textContent = 'Editing';
+			saveBtn.textContent = 'save';
+
+			fillInputs(task, modal);
+
+			saveBtn.addEventListener('click', () => {
+				updateTask(task, modal);
+			});
+			cancelBtn.addEventListener('click', () => {
+				closeModal(modal);
+			});
+
+			page.appendChild(modal);
+			modal.querySelector('#title').focus();
+		}
+
+		function getInputsValues(modal) {
+			const title = modal.querySelector('#title');
+			const description = modal.querySelector('#description');
+			const dueDate = modal.querySelector('#dueDate');
+			const priority = modal.querySelector('#priority');
+
+			return {
+				title: title.value,
+				description: description.value,
+				dueDate: dueDate.value,
+				priority: priority.value,
+			};
+		}
+
+		function fillInputs(task, modal) {
+			const title = modal.querySelector('#title');
+			const description = modal.querySelector('#description');
+			const dueDate = modal.querySelector('#dueDate');
+			const priority = modal.querySelector('#priority');
+
+			title.value = task.title;
+			description.value = task.description;
+			dueDate.value = task.dueDate;
+			priority.value = task.priority;
+		}
+
+		function updateTask(task, modal) {
+			const project = ProjectsModule.getProject(task.project);
+			const newData = getInputsValues(modal);
+
+			if (project.findTask(newData.title)) {
+				alert('Task name already exist.');
+				return false;
+			}
+			project.updateTask(task, newData);
+			updateDefaultPages();
+			updatePage(getPage(task));
+			closeModal(modal);
 		}
 
 		function active() {
@@ -407,6 +482,7 @@ const UI = (function () {
 			const modal = generateTaskModal();
 			addEventsTaskModal(modal, pageData);
 			page.appendChild(modal);
+			modal.querySelector('#title').focus();
 		}
 
 		function addEventsTaskModal(modal, pageData) {
