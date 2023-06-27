@@ -292,10 +292,20 @@ const UI = (function () {
 				showDetails(task);
 			});
 
+			circle.addEventListener('click', () => {
+				toggleTask(task);
+			});
+
 			taskContainer.appendChild(circle);
 			taskContainer.appendChild(taskName);
-			taskContainer.appendChild(btnDetails);
-			taskContainer.appendChild(editIcon);
+
+			if (task.isDone === true) {
+				taskContainer.classList.add('done');
+				circle.classList.add('complete')
+			} else {
+				taskContainer.appendChild(btnDetails);
+				taskContainer.appendChild(editIcon);
+			}
 			taskContainer.appendChild(removeIcon);
 
 			return taskContainer;
@@ -401,6 +411,14 @@ const UI = (function () {
 			});
 
 			page.appendChild(modal);
+		}
+
+		function toggleTask(task) {
+			const project = ProjectsModule.findProject(task.project);
+			const index = findIndex(task.project);
+			project.toggleTask(task);
+			updateDefaultPages();
+			updatePage(Pages[index]);
 		}
 
 		function active() {

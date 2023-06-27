@@ -94,6 +94,10 @@ function Project(name) {
 		task.priority = obj.priority;
 	}
 
+	function toggleTask(task) {
+		task.isDone === true ? task.isDone = false : task.isDone = true;
+	}
+
 	return {
 		name: projectName,
 		addTask,
@@ -102,6 +106,7 @@ function Project(name) {
 		findTaskIndex,
 		updateTask,
 		updateProjectName,
+		toggleTask,
 	};
 }
 
@@ -113,6 +118,7 @@ function Task(title, description, dueDate, priority, project) {
 		priority: priority,
 		addDate: getDate(),
 		project,
+		isDone: false,
 	};
 }
 

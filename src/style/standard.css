@@ -17,3 +17,12 @@
 .hidden {
 	visibility: hidden;
 }
+
+.done {
+	background-color: rgba(128, 128, 128, 0.178);
+	text-decoration: line-through;
+}
+
+.complete {
+	background-color: blue;
+}
