@@ -1,74 +1,87 @@
 main {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  padding: 3rem;
-  max-width: 1000px;
-  margin-inline: auto;
-  user-select: none;
-  color: var(--text-color);
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+	padding: 3rem;
+	max-width: 1000px;
+	margin-inline: auto;
+	user-select: none;
+	color: var(--text-color);
 }
 
 .header {
- display: flex;
- justify-content: space-between;
- margin-bottom: 1rem;
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 1rem;
 }
 
 .project-name {
-  flex: 1;
-  font-size: 1.3rem;
-  font-weight: bold;
+	flex: 1;
+	font-size: 1.3rem;
+	font-weight: bold;
 }
 
 .tasks {
-  margin-bottom: .5rem;
+	margin-bottom: 0.5rem;
 }
 
 .task {
-  display: flex;
-  align-items: center;
-  margin: .5rem 0;
-  gap: .5rem;
-  color: var(--text-color);
-  border: 1px solid var(--text-color);
-  padding: .5rem .3rem;
-  border-radius: .2rem;
-  cursor: pointer;
+	display: flex;
+	align-items: center;
+	margin: 0.8rem 0;
+	gap: 0.5rem;
+	color: var(--text-color);
+	border: 1px solid var(--text-color);
+	padding: 0.5rem 0.3rem;
+	border-radius: 0.2rem;
+	cursor: pointer;
 }
 
 main .icon:hover {
-  background-color: var(--hover-dark-color);
+	background-color: var(--hover-dark-color);
 }
 
 .task .circle {
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  border: 1px solid var(--text-color);
+	width: 18px;
+	height: 18px;
+	border-radius: 50%;
+	border: 1px solid var(--text-color);
 }
 
 .task .circle:hover {
-  background-color: var(--hover-dark-color);
-  cursor: pointer;
+	background-color: var(--hover-dark-color);
+	cursor: pointer;
 }
 
 .btn-add {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: transparent;
-  box-shadow: none;
-  border: none;
-  cursor: pointer;
-  gap: .2rem;
-  color: var(--text-color);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: transparent;
+	box-shadow: none;
+	border: none;
+	cursor: pointer;
+	gap: 0.2rem;
+	color: var(--text-color);
 }
 
 .btn-add .icon svg {
-  fill: var(--primary-color);
+	fill: var(--primary-color);
 }
 
 .btn-add:hover {
-  color: var(--primary-color);
+	color: var(--primary-color);
+}
+
+.btn-details {
+	border: 1px solid var(--text-color);
+	color: var(--text-color);
+	background-color: transparent;
+	padding: 0.3rem;
+	border-radius: 0.3rem;
+	cursor: pointer;
+}
+
+.btn-details:hover {
+	background-color: var(--hover-dark-color);
 }

@@ -3,8 +3,9 @@ import { generateSideBar } from './side-bar/side-bar.js';
 import { generateProjectModal } from './modals/project-modal.js';
 import { ProjectsModule } from '../Projects/projects.js';
 import { svgs } from './svgs/svgs.js';
-import { getDate } from '../date/date.js';
+import { formatDate, getDate } from '../date/date.js';
 import { generateTaskModal } from './modals/task-modal.js';
+import { generateDetailsModal } from './modals/details-modal.js';
 
 const UI = (function () {
 	const page = document.querySelector('.page-container');
@@ -255,10 +256,29 @@ const UI = (function () {
 			const removeIcon = document.createElement('span');
 			removeIcon.innerHTML = svgs.close;
 			removeIcon.classList.add('icon');
+			removeIcon.classList.add('hidden');
 
 			const editIcon = document.createElement('span');
 			editIcon.innerHTML = svgs.pen;
 			editIcon.classList.add('icon');
+			editIcon.classList.add('hidden');
+
+			const btnDetails = document.createElement('button');
+			btnDetails.textContent = 'Details';
+			btnDetails.classList.add('btn-details');
+			btnDetails.classList.add('hidden');
+
+			taskContainer.addEventListener('mouseover', () => {
+				removeIcon.classList.remove('hidden');
+				editIcon.classList.remove('hidden');
+				btnDetails.classList.remove('hidden');
+			});
+
+			taskContainer.addEventListener('mouseout', () => {
+				removeIcon.classList.add('hidden');
+				editIcon.classList.add('hidden');
+				btnDetails.classList.add('hidden');
+			});
 
 			removeIcon.addEventListener('click', () => {
 				removeTask(task);
@@ -266,11 +286,15 @@ const UI = (function () {
 
 			editIcon.addEventListener('click', () => {
 				editTask(task);
-				console.log(task);
+			});
+
+			btnDetails.addEventListener('click', () => {
+				showDetails(task);
 			});
 
 			taskContainer.appendChild(circle);
 			taskContainer.appendChild(taskName);
+			taskContainer.appendChild(btnDetails);
 			taskContainer.appendChild(editIcon);
 			taskContainer.appendChild(removeIcon);
 
@@ -354,6 +378,29 @@ const UI = (function () {
 			updateDefaultPages();
 			updatePage(getPage(task));
 			closeModal(modal);
+		}
+
+		function showDetails(task) {
+			const modal = generateDetailsModal();
+			const taskTitle = modal.querySelector('.task-title');
+			taskTitle.textContent = task.title;
+
+			const details = modal.querySelectorAll('.title span');
+			details.forEach((detail) => {
+				if (detail.id === 'dueDate') {
+					detail.textContent = formatDate(task[detail.id]);
+					return;
+				}
+				detail.textContent = task[detail.id];
+			});
+
+			const closeBtn = modal.querySelector('button');
+
+			closeBtn.addEventListener('click', () => {
+				closeModal(modal);
+			});
+
+			page.appendChild(modal);
 		}
 
 		function active() {
@@ -568,6 +615,7 @@ const UI = (function () {
 
 			addBtn.addEventListener('click', () => {
 				addTask(inputs, pageData);
+				inputs.querySelector('#title').focus();
 			});
 			cancelBtn.addEventListener('click', () => {
 				closeModal(modal);
