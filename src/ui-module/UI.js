@@ -199,12 +199,12 @@ const UI = (function () {
 			page.removeChild(currentPage);
 		}
 
-		function findIndex(name) {
+		function findPageIndex(name) {
 			return Pages.findIndex((page) => page.name === name);
 		}
 
 		function findPage(name) {
-			const index = findIndex(name);
+			const index = findPageIndex(name);
 			return Pages[index].page;
 		}
 
@@ -322,19 +322,11 @@ const UI = (function () {
 
 		function removeTask(task) {
 			const project = ProjectsModule.getProject(task.project);
-			const tasks = project.getTasks();
-			const taskIndex = project.findTaskIndex(task.title);
+			const pageIndex = findPageIndex(task.project);
 
-			tasks.splice(taskIndex, 1);
-
-			const pageData = getPage(task);
-
+			project.removeTask(task);
 			updateDefaultPages();
-			updatePage(pageData);
-		}
-
-		function getPage(task) {
-			return Pages.find((page) => page.name === task.project);
+			updatePage(Pages[pageIndex]);
 		}
 
 		function editTask(task) {
@@ -391,29 +383,28 @@ const UI = (function () {
 
 			if (project.findTask(newData.title) && newData.title !== task.title) {
 				alert('Task name already exist.');
-				return false;
+				return;
 			}
 			project.updateTask(task, newData);
 			updateDefaultPages();
-			updatePage(getPage(task));
+			updatePage(Pages[findPageIndex(task.project)]);
 			closeModal(modal);
 		}
 
 		function showDetails(task) {
 			const modal = generateDetailsModal();
 			const taskTitle = modal.querySelector('.task-title');
-			taskTitle.textContent = task.title;
+			const closeBtn = modal.querySelector('button');
+			const spans = modal.querySelectorAll('.title span');
 
-			const details = modal.querySelectorAll('.title span');
-			details.forEach((detail) => {
-				if (detail.id === 'dueDate') {
-					detail.textContent = formatDate(task[detail.id]);
+			taskTitle.textContent = task.title;
+			spans.forEach((span) => {
+				if (span.id === 'dueDate') {
+					span.textContent = formatDate(task[span.id]);
 					return;
 				}
-				detail.textContent = task[detail.id];
+				span.textContent = task[span.id];
 			});
-
-			const closeBtn = modal.querySelector('button');
 
 			closeBtn.addEventListener('click', () => {
 				closeModal(modal);
@@ -424,7 +415,7 @@ const UI = (function () {
 
 		function toggleTask(task) {
 			const project = ProjectsModule.findProject(task.project);
-			const index = findIndex(task.project);
+			const index = findPageIndex(task.project);
 			project.toggleTask(task);
 			updateDefaultPages();
 			updatePage(Pages[index]);
@@ -445,8 +436,8 @@ const UI = (function () {
 
 		function appendProject(project) {
 			const projectsContainer = sideBarContainer.querySelector('.projects');
-			projectsContainer.appendChild(createProject(project));
 			const newpage = createNewPage(project);
+			projectsContainer.appendChild(createProject(project));
 			Pages.push(newpage);
 		}
 
@@ -480,7 +471,7 @@ const UI = (function () {
 
 		function removeProject(container) {
 			const projects = sideBarContainer.querySelector('.projects');
-			const pageIndex = findIndex(container.id);
+			const pageIndex = findPageIndex(container.id);
 
 			projects.removeChild(container);
 			ProjectsModule.removeProject(container.id);
@@ -493,15 +484,15 @@ const UI = (function () {
 		}
 
 		function updateDefaultPages() {
-			Pages.forEach((object) => {
-				if (object.name === 'Inbox') {
-					appendTasks(getAllTasks, object.page);
+			Pages.forEach((pageData) => {
+				if (pageData.name === 'Inbox') {
+					appendTasks(getAllTasks, pageData.page);
 				}
-				if (object.name === 'Today') {
-					appendTasks(getTodayTasks, object.page);
+				if (pageData.name === 'Today') {
+					appendTasks(getTodayTasks, pageData.page);
 				}
-				if (object.name === 'Week') {
-					appendTasks(getWeekTasks, object.page);
+				if (pageData.name === 'Week') {
+					appendTasks(getWeekTasks, pageData.page);
 				}
 			});
 		}
@@ -515,8 +506,7 @@ const UI = (function () {
 			const projectsContainer = sideBarContainer.querySelector('.projects');
 			projects.forEach((project) => {
 				projectsContainer.appendChild(createProject(project));
-				const newpage = createNewPage(project);
-				Pages.push(newpage);
+				Pages.push(createNewPage(project));
 			});
 		}
 
@@ -605,7 +595,7 @@ const UI = (function () {
 
 			const project = ProjectsModule.findProject(projectName);
 			ProjectsModule.setProjectName(project, newName);
-			const pageIndex = Pages.findIndex((page) => page.name === projectName);
+			const pageIndex = findPageIndex(projectName);
 			const newPage = createNewPage(project);
 			Pages.splice(pageIndex, 1, newPage);
 			updateSidebar();
@@ -719,7 +709,6 @@ const UI = (function () {
 			if (isInvalidName(name)) {
 				return false;
 			}
-
 			return true;
 		}
 

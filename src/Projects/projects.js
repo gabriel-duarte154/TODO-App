@@ -98,6 +98,11 @@ function Project(name) {
 		task.isDone === true ? task.isDone = false : task.isDone = true;
 	}
 
+	function removeTask(task) {
+		const taskIndex = findTaskIndex(task.title);
+		tasks.splice(taskIndex, 1);
+	}
+
 	return {
 		name: projectName,
 		addTask,
@@ -107,6 +112,7 @@ function Project(name) {
 		updateTask,
 		updateProjectName,
 		toggleTask,
+		removeTask
 	};
 }
 

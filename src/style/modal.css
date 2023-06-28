@@ -1,14 +1,16 @@
 .modal-container {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
-  height: 100vh;
+  height: 100%;
   width: 100vw;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: #2222227a;
   z-index: 2;
+  overflow: scroll;
+  padding: 2rem;
 }
 
 .modal {

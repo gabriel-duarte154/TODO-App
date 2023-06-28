@@ -6,9 +6,13 @@
 	box-sizing: border-box;
 }
 
+html {
+	min-height: 100vh;
+}
+
 .page-container {
 	display: flex;
-	min-height: 100vh;
+	height: 100%;
 	max-width: 100vw;
 	padding-top: var(--top-bar-height);
 	background-color: var(--bg-color);
@@ -24,5 +28,5 @@
 }
 
 .complete {
-	
+	background-color: black;
 }
