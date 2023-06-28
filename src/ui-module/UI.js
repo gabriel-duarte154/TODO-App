@@ -254,6 +254,7 @@ const UI = (function () {
 		function createTask(task) {
 			const taskContainer = document.createElement('div');
 			taskContainer.classList.add('task');
+			taskContainer.classList.add(task.priority);
 
 			const circle = document.createElement('span');
 			circle.classList.add('circle');
@@ -310,7 +311,7 @@ const UI = (function () {
 
 			if (task.isDone === true) {
 				taskContainer.classList.add('done');
-				circle.classList.add('complete');
+				circle.textContent = 'x';
 			} else {
 				taskContainer.appendChild(btnDetails);
 				taskContainer.appendChild(editIcon);

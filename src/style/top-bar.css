@@ -3,14 +3,14 @@
 	justify-content: space-between;
 	align-items: center;
 	padding-inline: 1rem;
-	width: 100%;
 	background-color: var(--primary-color);
 	position: fixed;
 	top: 0;
 	left: 0;
 	padding: 0.4rem 1.5rem;
 	height: var(--top-bar-height);
-	z-index: 3;
+	z-index: 2;
+	width: 100%;
 }
 
 .top-bar-container svg {
@@ -108,10 +108,9 @@ input::placeholder {
 
 .search-modal button {
 	border: none;
-	outline: none;
 	cursor: pointer;
 	padding: 1rem;
-	background-color: transparent;
+	background-color: rgba(255, 255, 255, 0.288);
 	text-align: left;
 	font-size: 1rem;
 	color: var(--text-color);
@@ -124,7 +123,8 @@ input::placeholder {
 @media screen and (max-width: 600px) {
 	.top-bar-container {
 		justify-content: left;
-		gap: 2rem;
+		gap: 5vw;
+		padding: .4rem .5rem;
 	}
 	.quick-search {
 		flex: 1;

@@ -23,10 +23,10 @@ html {
 }
 
 .done {
-	background-color: rgba(128, 128, 128, 0.178);
 	text-decoration: line-through;
+	background-color: #00000021;
 }
 
 .complete {
-	background-color: black;
+	
 }

@@ -9,13 +9,15 @@
   --top-bar-height: 45px;
   --side-bar-width: 300px;
   --transition-time: .3s;
+  --task-bg: #e9e9e9bb;
 }
 
 :root.dark {
-  --primary-color: #164169;
-  --side-bar-color: #172c41;
+  --primary-color: #224875;
+  --side-bar-color: #193250;
   --text-color: #fff;
-  --hover-dark-color: #164169;
-  --bg-color: #233e59;
+  --hover-dark-color: #59749693;
+  --bg-color: #12263d;
   --secondary-color: #5082b1;
+  --task-bg: #0F2034;
 }
