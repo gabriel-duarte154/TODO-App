@@ -18,7 +18,7 @@ const UI = (function () {
 		page.appendChild(sideBar[1]);
 		page.appendChild(sideBar[0]);
 		addEvents();
-		changePageModule.init();
+		pageLogic.init();
 	}
 
 	function addEvents() {
@@ -124,7 +124,7 @@ const UI = (function () {
 		projectModal.querySelector('input').value = '';
 	}
 
-	const changePageModule = (function () {
+	const pageLogic = (function () {
 		const Pages = [];
 		const sideBarContainer = sideBar[0];
 		let currentPage = null;
@@ -729,13 +729,13 @@ const UI = (function () {
 	function addProject() {
 		let name = projectModal.querySelector('input').value;
 		if (!name) return;
-		if (!changePageModule.isvalidProject(name)) {
+		if (!pageLogic.isvalidProject(name)) {
 			alert('Project name already exist or is a invalid name');
 			return;
 		}
 
 		ProjectsModule.addProject(name);
-		changePageModule.appendProject(ProjectsModule.getProject(name));
+		pageLogic.appendProject(ProjectsModule.getProject(name));
 		closeProjectModal();
 	}
 

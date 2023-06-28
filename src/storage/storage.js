@@ -1,7 +1,9 @@
 const storage = localStorage;
-if (!storage.getItem('Projects')) storage.setItem('Projects', JSON.stringify([]));
+if (!storage.getItem('Projects')) {
+	storage.setItem('Projects', JSON.stringify([]));
+}
 
-const storageModule = (function () {
+const projectStorageModule = (function () {
 	const projectsData = JSON.parse(storage.getItem('Projects'));
 
 	function saveData(projects) {
@@ -18,4 +20,4 @@ const storageModule = (function () {
 	};
 })();
 
-export { storageModule };
+export { projectStorageModule };

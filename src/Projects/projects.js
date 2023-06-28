@@ -1,5 +1,5 @@
 import { getDate } from '../date/date.js';
-import { storageModule as storage } from '../storage/storage.js';
+import { projectStorageModule as storage } from '../storage/storage.js';
 
 const ProjectsModule = (function () {
 	const Projects = [];
