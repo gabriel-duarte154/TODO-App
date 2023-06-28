@@ -34,7 +34,13 @@ function createQuickSearch() {
 	const input = document.createElement('input');
 	input.placeholder = 'Search...';
 
+	const searchModal = document.createElement('div');
+	searchModal.classList.add('search-modal');
+	searchModal.classList.add('hidden');
+	searchModal.id = 'search-options';
+
 	quickSearch.appendChild(input);
+	quickSearch.appendChild(searchModal);
 
 	return quickSearch;
 }

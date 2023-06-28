@@ -712,11 +712,54 @@ const UI = (function () {
 			return true;
 		}
 
+		function quickSearchEvent() {
+			const input = topBar.querySelector('input');
+			input.addEventListener('input', () => {
+				quickSearch(input.value);
+			});
+		}
+
+		function quickSearch(value) {
+			const quickSearchContainer = topBar.querySelector('#search-options');
+			if (!value) {
+				quickSearchContainer.classList.add('hidden');
+				return;
+			}
+
+			const options = search(value);
+			quickSearchContainer.classList.remove('hidden');
+			quickSearchContainer.innerHTML = '';
+
+			options.forEach((option) => {
+				const container = document.createElement('button');
+				container.textContent = option.name;
+				container.addEventListener('click', () => {
+					openPage(option.name);
+					topBar.querySelector('input').value = '';
+					quickSearchContainer.classList.add('hidden');
+				});
+
+				quickSearchContainer.appendChild(container);
+			});
+		}
+
+		function search(value) {
+			const validPages = [];
+			Pages.forEach((pageData) => {
+				const pageName = pageData.name.toLowerCase();
+				if (pageName.includes(value.toLowerCase())) {
+					validPages.push(pageData);
+				}
+			});
+			return validPages;
+		}
+
 		function init() {
 			createDefalutPages();
 			addDefalutProjectsEvents();
 			openDefalutPage('Inbox', getAllTasks);
 			addAllProjects();
+			quickSearchEvent();
 		}
 
 		return {
