@@ -64,7 +64,7 @@ function createOptionsContainer() {
 }
 
 function createOption(option) {
-	const container = document.createElement('div');
+	const container = document.createElement('button');
 	container.classList.add('option');
 	container.id = option.id;
 
@@ -100,12 +100,12 @@ function createProjectsHeader() {
 	header.classList.add('projects-header');
 	header.textContent = 'Projects';
 
-	const span = document.createElement('span');
-	span.classList.add('icon');
-	span.id = 'project-modal'
-	span.innerHTML = svgs.plus;
+	const button = document.createElement('button');
+	button.classList.add('icon');
+	button.id = 'project-modal'
+	button.innerHTML = svgs.plus;
 
-	header.appendChild(span);
+	header.appendChild(button);
 
 	return header;
 }

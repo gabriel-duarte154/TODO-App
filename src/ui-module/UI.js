@@ -256,19 +256,19 @@ const UI = (function () {
 			taskContainer.classList.add('task');
 			taskContainer.classList.add(task.priority);
 
-			const circle = document.createElement('span');
+			const circle = document.createElement('button');
 			circle.classList.add('circle');
 
 			const taskName = document.createElement('span');
 			taskName.classList.add('name');
 			taskName.textContent = task.title;
 
-			const removeIcon = document.createElement('span');
+			const removeIcon = document.createElement('button');
 			removeIcon.innerHTML = svgs.close;
 			removeIcon.classList.add('icon');
 			removeIcon.classList.add('hidden');
 
-			const editIcon = document.createElement('span');
+			const editIcon = document.createElement('button');
 			editIcon.innerHTML = svgs.pen;
 			editIcon.classList.add('icon');
 			editIcon.classList.add('hidden');
@@ -311,7 +311,7 @@ const UI = (function () {
 
 			if (task.isDone === true) {
 				taskContainer.classList.add('done');
-				circle.textContent = 'x';
+				circle.innerHTML = svgs.check;
 			} else {
 				taskContainer.appendChild(btnDetails);
 				taskContainer.appendChild(editIcon);
@@ -443,7 +443,7 @@ const UI = (function () {
 		}
 
 		function createProject(project) {
-			const container = document.createElement('div');
+			const container = document.createElement('button');
 			container.classList.add('option');
 			container.id = project.name;
 
@@ -451,7 +451,7 @@ const UI = (function () {
 			projectName.classList.add('name');
 			projectName.textContent = project.name;
 
-			const remove = document.createElement('span');
+			const remove = document.createElement('button');
 			remove.classList.add('icon');
 			remove.innerHTML = svgs.close;
 			remove.addEventListener('click', () => {

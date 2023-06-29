@@ -17,7 +17,7 @@ function generateTopBar() {
 }
 
 function createburgerMenu() {
-	const menu = document.createElement('div');
+	const menu = document.createElement('button');
 	menu.classList.add('burger-menu');
 	menu.classList.add('btn');
 	menu.id = 'burgerMenu';
@@ -46,7 +46,7 @@ function createQuickSearch() {
 }
 
 function createToggle() {
-	const toggle = document.createElement('div');
+	const toggle = document.createElement('button');
 	toggle.classList.add('toggle-theme');
 	toggle.classList.add('btn');
 	toggle.innerHTML = svgs.sun;

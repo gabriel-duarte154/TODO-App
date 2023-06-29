@@ -23,6 +23,10 @@
   color: var(--text-color);
 }
 
+select {
+  background-color: var(--bg-color) !important;
+}
+
 .modal-header {
   font-size: 1.1rem;
   font-weight: bold;

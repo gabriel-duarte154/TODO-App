@@ -27,6 +27,6 @@ html {
 	background-color: #00000021;
 }
 
-.complete {
-	
-}
+button:focus-visible {
+	outline: .19rem solid var(--outline-color);
+}	

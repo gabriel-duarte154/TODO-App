@@ -9,8 +9,14 @@
 	left: 0;
 	padding: 0.4rem 1.5rem;
 	height: var(--top-bar-height);
-	z-index: 2;
+	z-index: 3;
 	width: 100%;
+}
+
+.top-bar-container button {
+	display: flex;
+	background-color: transparent;
+	border: none;
 }
 
 .top-bar-container svg {
@@ -57,7 +63,7 @@ input::placeholder {
 }
 
 .quick-search:hover {
-	background-color: var(--hover-light-color);
+	background-color: var(--hover-top-bar);
 }
 
 .toggle-theme {
@@ -65,7 +71,7 @@ input::placeholder {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	border: 1px solid #ffffffa8;
+	border: 1px solid #ffffffa8 !important;
 	border-radius: 1.2rem;
 	padding: 0 0.3rem;
 	gap: 0.2rem;
@@ -90,7 +96,7 @@ input::placeholder {
 }
 
 .btn:hover {
-	background-color: var(--hover-light-color);
+	background-color: var(--hover-top-bar);
 }
 
 .search-modal {

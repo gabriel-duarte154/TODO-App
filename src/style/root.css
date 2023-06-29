@@ -4,20 +4,24 @@
   --text-color: #554f4f;
   --bg-color: #fff;
   --side-bar-color: #f6f6f6;
-  --hover-dark-color: #e8e8e8;
-  --hover-light-color: #ffffff38;
+  --hover-side-bar: #e8e8e8;
+  --hover-top-bar: #ffffff38;
+  --hover-task: #20202028;
   --top-bar-height: 45px;
   --side-bar-width: 300px;
   --transition-time: .3s;
   --task-bg: #e9e9e9bb;
+  --outline-color: #ebbd69;
 }
 
 :root.dark {
   --primary-color: #224875;
   --side-bar-color: #193250;
   --text-color: #fff;
-  --hover-dark-color: #59749693;
+  --hover-side-bar: #59749693;
   --bg-color: #12263d;
   --secondary-color: #5082b1;
   --task-bg: #0F2034;
+  --hover-task: #ffffff4d;
+  --outline-color: #6caee4;
 }
