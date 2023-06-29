@@ -190,9 +190,4 @@ function Task(title, description, dueDate, priority, project, addDate, isDone) {
 	};
 }
 
-ProjectsModule.addProject('Default Project');
-const project = ProjectsModule.getProject('Default Project');
-const description = 'You can add new Projects and Taks, look in the sibebar and click and the + icon to add a new project';
-project.addTask('Click in the datails button', description, '', 'p1', 'Default Project');
-
 export { ProjectsModule };

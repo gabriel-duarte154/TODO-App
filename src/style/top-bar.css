@@ -123,7 +123,7 @@ input::placeholder {
 }
 
 .search-modal button:hover {
-	background-color: var(--hover-dark-color);
+	background-color: var(--hover-side-bar);
 }
 
 @media screen and (max-width: 600px) {
