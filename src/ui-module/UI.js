@@ -6,6 +6,7 @@ import { svgs } from './svgs/svgs.js';
 import { formatDate, getDate } from '../date/date.js';
 import { generateTaskModal } from './modals/task-modal.js';
 import { generateDetailsModal } from './modals/details-modal.js';
+import { navagationStorageModule as storage } from '../storage/storage.js';
 
 const UI = (function () {
 	const page = document.querySelector('.page-container');
@@ -18,7 +19,16 @@ const UI = (function () {
 		page.appendChild(sideBar[1]);
 		page.appendChild(sideBar[0]);
 		addEvents();
+		restorageTheme();
 		pageLogic.init();
+	}
+
+	function restorageTheme() {
+		const theme = storage.getTheme();
+		if (theme) {
+			document.documentElement.classList.add(theme);
+			moveToggle();
+		}
 	}
 
 	function addEvents() {
@@ -89,6 +99,8 @@ const UI = (function () {
 			theme.classList.add('dark');
 			moveToggle();
 		}
+
+		storage.saveTheme(theme.classList[0] || '');
 	}
 
 	function isTheme(theme) {
