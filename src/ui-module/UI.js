@@ -694,6 +694,10 @@ const UI = (function () {
 			currentPage = projectPage;
 			page.appendChild(projectPage);
 			active();
+
+			if (window.innerWidth <= 800) {
+				openCloseSideBar();
+			}
 		}
 
 		function isInvalidName(name) {
