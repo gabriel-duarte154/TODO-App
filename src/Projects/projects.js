@@ -1,10 +1,37 @@
 import { getDate } from '../date/date.js';
+import { storageModule as storage } from '../storage/storage.js';
 
 const ProjectsModule = (function () {
 	const Projects = [];
 
+	if (storage.getProjectsData()) {
+		restoreData();
+	}
+
+	function restoreData() {
+		const data = [...storage.getProjectsData()];
+		data.forEach((project) => {
+			addProject(project.name);
+			const newProject = findProject(project.name);
+			project.tasks.forEach((task) => {
+				newProject.restoretask(
+					task.title,
+					task.description,
+					task.dueDate,
+					task.priority,
+					task.project,
+					task.addDate,
+					task.isDone
+				);
+			});
+		});
+		saveData();
+	}
+
 	function addProject(name) {
-		Projects.push(Project(name));
+		const project = Project(name);
+		Projects.push(project);
+		saveData();
 	}
 
 	function getAllProjects() {
@@ -29,6 +56,7 @@ const ProjectsModule = (function () {
 	function removeProject(name) {
 		const projectIndex = findIndex(name);
 		Projects.splice(projectIndex, 1);
+		saveData();
 	}
 
 	function getAllTasks() {
@@ -43,6 +71,11 @@ const ProjectsModule = (function () {
 	function setProjectName(project, newName) {
 		project.name = newName;
 		project.updateProjectName(newName);
+		saveData();
+	}
+
+	function saveData() {
+		storage.saveData(Projects);
 	}
 
 	return {
@@ -53,6 +86,7 @@ const ProjectsModule = (function () {
 		removeProject,
 		getAllTasks,
 		setProjectName,
+		saveData,
 	};
 })();
 
@@ -61,7 +95,30 @@ function Project(name) {
 	let projectName = name;
 
 	function addTask(title, description, dueDate, priority) {
-		tasks.push(Task(title, description, dueDate, priority, projectName));
+		const newTask = Task(title, description, dueDate, priority, projectName);
+		tasks.push(newTask);
+		ProjectsModule.saveData();
+	}
+
+	function restoretask(
+		title,
+		description,
+		dueDate,
+		priority,
+		project,
+		addDate,
+		isDone
+	) {
+		const newTask = Task(
+			title,
+			description,
+			dueDate,
+			priority,
+			project,
+			addDate,
+			isDone
+		);
+		tasks.push(newTask);
 	}
 
 	function findTask(title) {
@@ -92,18 +149,22 @@ function Project(name) {
 		task.description = obj.description;
 		task.dueDate = obj.dueDate;
 		task.priority = obj.priority;
+		ProjectsModule.saveData();
 	}
 
 	function toggleTask(task) {
-		task.isDone === true ? task.isDone = false : task.isDone = true;
+		task.isDone === true ? (task.isDone = false) : (task.isDone = true);
+		ProjectsModule.saveData();
 	}
 
 	function removeTask(task) {
 		const taskIndex = findTaskIndex(task.title);
 		tasks.splice(taskIndex, 1);
+		ProjectsModule.saveData();
 	}
 
 	return {
+		tasks,
 		name: projectName,
 		addTask,
 		getTasks,
@@ -112,28 +173,21 @@ function Project(name) {
 		updateTask,
 		updateProjectName,
 		toggleTask,
-		removeTask
+		removeTask,
+		restoretask,
 	};
 }
 
-function Task(title, description, dueDate, priority, project) {
+function Task(title, description, dueDate, priority, project, addDate, isDone) {
 	return {
 		title: title,
 		description: description,
 		dueDate: dueDate,
 		priority: priority,
-		addDate: getDate(),
-		project,
-		isDone: false,
+		project: project,
+		addDate: addDate || getDate(),
+		isDone: isDone || false,
 	};
 }
-
-ProjectsModule.addProject('Todo App');
-const app = ProjectsModule.getProject('Todo App');
-app.addTask('show details', 'for the todo app', '2023-06-27', 'p1');
-app.addTask('task done', 'for the todo app', '2023-06-27', 'p1');
-app.addTask('color palete', 'for the todo app', '2023-06-27', 'p2');
-app.addTask('hover effects', 'for the todo app', '2023-06-27', 'p2');
-app.addTask('storage Module', 'for the todo app', '2023-06-27', 'p1');
 
 export { ProjectsModule };
